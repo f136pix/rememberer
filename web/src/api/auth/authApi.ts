@@ -16,7 +16,7 @@ export const loginUserApi = async (data: INewUserReq) => {
         console.log(res)
         return res
     } catch (err) {
-        console.log(err)
+        throw err
     }
 
 }
@@ -44,13 +44,16 @@ export const getCurrentUser = async () => {
                 withCredentials: true,
                 headers: {
                     "withCredentials": "true",
-                    "Content-Type": "application/json",
-                    "Referer": "127.0.0.1:8000"
+                    "Content-Type": "application/json"
                 }
             })
-        console.log(res)
+        // bussiness logic
+        if(res.data) {
+            return res.data
+        }
+        return false
     } catch (err) {
-        console.log(err)
+        return false
     }
 }
 export const getCrsfToken = async () => {

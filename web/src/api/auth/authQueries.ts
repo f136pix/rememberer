@@ -7,10 +7,9 @@ export const useLoginUser = () => {
         mutationFn: async (data: INewUserReq): Promise<boolean> => {
             try {
                 await loginUserApi((data))
-                await getCurrentUser()
                 return true
             } catch (err) {
-                return err
+                throw new Error(err.response.data.message)
             }
         }
     })

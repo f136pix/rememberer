@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import * as z from "zod"
@@ -23,9 +23,14 @@ import {useNavigate} from "react-router-dom";
 import {Simulate} from "react-dom/test-utils";
 import {ToastAction, Toast} from "@/components/ui/toast.tsx";
 import {toast} from "@/components/ui/use-toast.ts";
+import error = Simulate.error;
+import {getCrsfToken} from "@/api/auth/authApi.ts";
 
 
 export function AuthForm(props) {
+    useEffect(() => {
+        getCrsfToken()
+    }, []);
     const navigate = useNavigate()
     const {mutateAsync: loginUser, isPending: isAuthenticatingUser} = useLoginUser()
     const [formNumber, setFormNumber] = useState('1')
@@ -67,14 +72,15 @@ export function AuthForm(props) {
         try {
             const res: boolean = await loginUser(user)
             if (!res) {
-                throw new Error('wrong-data')
+                throw new Error('There was a unexpected error')
             }
             navigate('/')
         } catch (err) {
-            if (err.message == 'wrong-date') {
-                console.log('pau')
-                return false
-            }
+            console.log(err)
+            toast({
+                variant: 'destructive',
+                title:err.message
+            })
         }
         //setFormNumber('3')
     }
