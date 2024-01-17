@@ -21,6 +21,38 @@ export const loginUserApi = async (data: INewUserReq) => {
 
 }
 
+export const destroyToken = async () => {
+    try {
+        const res = await axios.post('/logout', {},
+            {
+                withCredentials: true,
+                headers: {
+                    "withCredentials": "true",
+                    "Content-Type": "application/json",
+                }
+            })
+        console.log(res)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const getCurrentUser = async () => {
+    try {
+        const res = await axios.get('/api/user',
+            {
+                withCredentials: true,
+                headers: {
+                    "withCredentials": "true",
+                    "Content-Type": "application/json",
+                    "Referer": "127.0.0.1:8000"
+                }
+            })
+        console.log(res)
+    } catch (err) {
+        console.log(err)
+    }
+}
 export const getCrsfToken = async () => {
     axios.get('/sanctum/csrf-cookie').then(response => {
         console.log(response)

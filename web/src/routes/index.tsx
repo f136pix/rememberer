@@ -2,6 +2,7 @@ import {Route, Routes} from "react-router-dom";
 import HomePage from "@/_public/pages/HomePage.tsx";
 import RegisterLayout from "@/_public/RegisterLayout.tsx";
 import AuthPage from "@/_public/pages/AuthPage.tsx";
+import Dashboard from "@/_secured/pages/Dashboard.tsx";
 
 export const AppRoutes = () => {
     return (
@@ -11,9 +12,9 @@ export const AppRoutes = () => {
                 <Route path={'/auth'} element={<AuthPage/>}/>
             </Route>
             {/*secure components*/}
-            {/* <Route element={<RootLayout/>}>
-                <Route index element={<Home/>}/>
-                <Route path={'/explore'} element={<Explore/>}/>
+            {/*<Route element={<RootLayout/>}>*/}
+                <Route path={'/'} element={<Dashboard/>}/>
+                {/*<Route path={'/explore'} element={<Explore/>}/>
                 <Route path={'/saved'} element={<Saved/>}/>
                 <Route path={'/all-users'} element={<AllUsers/>}/>
                 <Route path={'/create-post'} element={<CreatePost/>}/>

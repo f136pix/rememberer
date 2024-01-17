@@ -60,9 +60,6 @@ export function AuthForm(props) {
 
 
     async function onSubmitLogin(values: z.infer<typeof loginValidationSchema>) {
-        toast({
-            description: "Your message has been sent.",
-        })
         const user: INewUserReq = {
             email: values.email,
             password: values.password
