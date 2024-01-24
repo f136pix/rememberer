@@ -3,6 +3,8 @@ import HomePage from "@/_public/pages/HomePage.tsx";
 import RegisterLayout from "@/_public/RegisterLayout.tsx";
 import AuthPage from "@/_public/pages/AuthPage.tsx";
 import Dashboard from "@/_secured/pages/Dashboard.tsx";
+import SecureLayout from "@/_secured/SecureLayout.tsx";
+import Profile from "@/_secured/pages/Profile.tsx";
 
 export const AppRoutes = () => {
     return (
@@ -12,8 +14,9 @@ export const AppRoutes = () => {
                 <Route path={'/auth'} element={<AuthPage/>}/>
             </Route>
             {/*secure components*/}
-            {/*<Route element={<RootLayout/>}>*/}
+            <Route element={<SecureLayout/>}>
                 <Route path={'/'} element={<Dashboard/>}/>
+                <Route path={'/profile/:id'} element={<Profile/>}/>
                 {/*<Route path={'/explore'} element={<Explore/>}/>
                 <Route path={'/saved'} element={<Saved/>}/>
                 <Route path={'/all-users'} element={<AllUsers/>}/>
@@ -23,7 +26,8 @@ export const AppRoutes = () => {
                 <Route path={'/profile/:id/*'} element={<Profile/>}/>
                 <Route path={'/update-profile/:id'} element={<UpdateProfile/>}/>
                 <Route path={'/liked-posts/:id'} element={<LikedPosts/>}/>
-            </Route> */}
+             */}
+            </Route>
         </Routes>
     )
 

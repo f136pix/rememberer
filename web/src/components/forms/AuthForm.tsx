@@ -17,8 +17,8 @@ import {
 import {Input} from "@/components/ui/input.tsx";
 import {emailValidationSchema, loginValidationSchema, registerValidationSchema} from "@/lib/validation";
 import FadeIn from "react-fade-in";
-import {useLoginUser} from "@/api/auth/authQueries.ts";
-import {INewUserReq} from "@/types";
+import {useCheckEmailExists, useLoginUser, useRegisterUser} from "@/api/auth/authQueries.ts";
+import {IUserReq} from "@/types";
 import {useNavigate} from "react-router-dom";
 import {Simulate} from "react-dom/test-utils";
 import {ToastAction, Toast} from "@/components/ui/toast.tsx";
@@ -33,6 +33,8 @@ export function AuthForm(props) {
     }, []);
     const navigate = useNavigate()
     const {mutateAsync: loginUser, isPending: isAuthenticatingUser} = useLoginUser()
+    const {mutateAsync: checkEmail, isPending: isCheckingEmail} = useCheckEmailExists()
+    const {mutateAsync: registerUser, isPending: isRegisteringUser} = useRegisterUser()
     const [formNumber, setFormNumber] = useState('1')
     const [equalsValue, setEqualsValue] = useState('')
     const [inputedEmail, setInputedEmail] = useState('')
@@ -47,7 +49,13 @@ export function AuthForm(props) {
 
     async function onSubmit(values: z.infer<typeof emailValidationSchema>) {
         setInputedEmail(values.email)
-        setFormNumber('2')
+        const exists: boolean = await checkEmail(values.email)
+        if (exists) {
+            setFormNumber('2')
+        } else {
+            setFormNumber('3')
+        }
+
     }
 
     // login form
@@ -65,7 +73,7 @@ export function AuthForm(props) {
 
 
     async function onSubmitLogin(values: z.infer<typeof loginValidationSchema>) {
-        const user: INewUserReq = {
+        const user: IUserReq = {
             email: values.email,
             password: values.password
         }
@@ -74,12 +82,12 @@ export function AuthForm(props) {
             if (!res) {
                 throw new Error('There was a unexpected error')
             }
-            navigate('/')
+            return window.location.href = '/'
         } catch (err) {
             console.log(err)
             toast({
                 variant: 'destructive',
-                title:err.message
+                title: err.message
             })
         }
         //setFormNumber('3')
@@ -103,13 +111,25 @@ export function AuthForm(props) {
     })
 
 
-    function onSubmitRegister(values: z.infer<typeof registerValidationSchema>) {
-        console.log(values)
+    async function onSubmitRegister(values: z.infer<typeof registerValidationSchema>) {
         if (values.password !== values.passwordConfirm) {
             setEqualsValue('Passwords not matching')
             return
         }
-        setFormNumber('2')
+
+        const res = await registerUser(values)
+        if (res === 'ok') {
+            window.location.href = '/'
+            toast({
+                className: 'bg-green-700',
+                title: 'User created succefully'
+            })
+            return
+        }
+        toast({
+            variant: 'destructive',
+            title: res
+        })
     }
 
 
@@ -131,7 +151,7 @@ export function AuthForm(props) {
                                         <FormItem>
                                             <FormLabel className={'text-white'}>Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="joao@mail.com" type={'email'}
+                                                <Input placeholder="joao@mail.com" type={'text'}
                                                        className={'bg-gray-900 text-neutral-300'} {...field} />
                                             </FormControl>
                                             <FormMessage/>
@@ -164,7 +184,7 @@ export function AuthForm(props) {
                                         <FormItem>
                                             <FormLabel className={'text-white'}>Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="joao@mail.com" type={'email'}
+                                                <Input placeholder="joao@mail.com" type={'text'}
                                                        className={'bg-gray-900 text-neutral-300'} {...field} />
                                             </FormControl>
                                             <FormMessage/>
@@ -212,7 +232,7 @@ export function AuthForm(props) {
                                         <FormItem>
                                             <FormLabel className={'text-white'}>Email</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="joao@mail.com" type={'email'}
+                                                <Input placeholder="joao@mail.com" type={'text'}
                                                        className={'bg-gray-900 text-neutral-300'} {...field} />
                                             </FormControl>
                                             <FormMessage/>
@@ -226,7 +246,7 @@ export function AuthForm(props) {
                                         <FormItem>
                                             <FormLabel className={'text-white'}>Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="joao@mail.com" type={'text'}
+                                                <Input placeholder="Joao da Silva" type={'text'}
                                                        className={'bg-gray-900 text-neutral-300'} {...field} />
                                             </FormControl>
                                             <FormMessage/>

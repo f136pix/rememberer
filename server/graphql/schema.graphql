@@ -1,0 +1,81 @@
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+#find single user by attr
+type Query {
+    user(
+        #find by id
+        id: ID @eq @rules(apply: ["prohibits:email", "required_without:email"] )
+        #find by email
+        email: String @eq @rules(apply: ["prohibits:id", "required_without:id", "email"])
+    ): User @find
+
+    #filter user by similar names
+    users(
+        #Filters by name. Accepts SQL LIKE wildcards `%` and `_`.
+        name: String @where(operator: "like")
+    ): [User!]! @paginate(defaultCount: 10)
+
+    task(
+        #find by id
+        id: ID @eq
+    ): Task @find
+
+    #find by dateInterval and userId
+    tasks(
+        start_date: DateTime,
+        end_date: DateTime,
+        user_id: ID,
+        team_id: ID,
+    ): [Task]! @field(resolver: "Tasks")
+
+    teams(
+        id: ID
+        user_id: ID
+        limit: Boolean
+    ) : [Team]! @field(resolver: "Teams")
+}
+
+#user model
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    #user hasManyTasks
+    tasks: [Task!] @hasMany
+    #user hasManyTeams
+    teams: [Team!]
+    email_verified_at: DateTime
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+# task model
+type Task {
+    id: ID!
+    title: String!
+    description: String!
+    target_date: DateTime!
+    is_team: Boolean!
+    done: Boolean!
+    priority: Int!
+    #can belong to team
+    team: Team @belongsTo
+    #can belong to user
+    user: User @belongsTo
+    created_at: DateTime!
+    updated_at: DateTime!
+}
+
+#type team
+type Team {
+    id: ID!
+    name: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    #belongs to a creator
+    creator: User @belongsTo
+    #has Many tasks
+    tasks : [Task] @belongsToMany
+    #has many users
+    users: [User]
+}

@@ -18,9 +18,6 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-// checks if user exists
-Route::get('/user-exists', [UserController::class, 'check']);
-
 //Route::apiResource()
 
 require __DIR__.'/auth.php';

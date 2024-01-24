@@ -1,8 +1,7 @@
 import {createContext, useContext, useEffect, useState, ReactNode} from 'react';
 import {IContextType, IUser} from "@/types";
 import {getCurrentUser} from "@/api/auth/authApi.ts";
-import Cookies from "js-cookie";
-import {redirect, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {toast} from "@/components/ui/use-toast.ts";
 
 const INITIAL_USER = {
@@ -74,7 +73,7 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
                     return
                 }
             })
-    }, []);
+    }, [pathname.pathname, navigate]);
 
     // values que serão exportados no authContext
     const value = {

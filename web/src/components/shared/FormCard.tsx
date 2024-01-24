@@ -3,7 +3,7 @@ import * as React from "react"
 import {
     Card
 } from "@/components/ui/card"
-import {cn} from "@/lib/utils.ts";
+import {cn} from "@/lib/utils.tsx";
 import { ReactNode } from "react";
 import AuthForm from "@/components/forms/AuthForm.tsx";
 

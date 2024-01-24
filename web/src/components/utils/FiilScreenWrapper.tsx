@@ -1,4 +1,4 @@
-import {cn} from "@/lib/utils";
+import {cn} from "@/lib/utils.tsx";
 import {ReactNode} from "react";
 
 type IParameters = {
@@ -9,7 +9,7 @@ type IParameters = {
 function FillScreenWrapper({className, children}: IParameters) {
     return (
         // recebendo classes dinamicamente
-        <div className={cn("w-screen", className)}>
+        <div className={cn("w-screen h-screen", className)}>
             {children}
         </div>
     );
