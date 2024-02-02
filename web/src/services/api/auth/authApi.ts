@@ -1,5 +1,5 @@
 import axios from "../config.ts";
-import {IRegisterUser, IRegisterUserReq, IUserReq} from "@/types";
+import {IRegisterUser, IRegisterUserReq, IUserReq} from "src/types";
 
 export const loginUserApi = async (data: IUserReq) => {
     try {

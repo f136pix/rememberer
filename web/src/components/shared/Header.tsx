@@ -4,11 +4,11 @@ import {CommandSeparator} from "cmdk";
 import {cn, navigateTo} from "@/lib/utils.tsx";
 import {useUserContext} from "@/context/AuthContext.tsx";
 import {ArrowLeftFromLine, Bolt, WavesIcon} from "lucide-react";
-import {useDestroySession} from "@/api/auth/authQueries.ts";
+import {useDestroySession} from "@/services/api/auth/authQueries.ts";
 import {toast} from "@/components/ui/use-toast.ts";
-import {useGetCurrUserTeams} from "@/api/graphQl/graphQlQueries.ts";
+import {useGetCurrUserTeams} from "@/services/api/graphQl/graphQlQueries.ts";
 import {Link, useNavigate} from "react-router-dom";
-import {FEATURES_LIST} from "@/config/preseted-data/Index.tsx";
+import {FEATURES_LIST} from "@/lib/config/index.tsx";
 import {generateListItem} from "@/lib/utils.tsx";
 
 function Header({className, user}) {
@@ -31,9 +31,11 @@ function Header({className, user}) {
 
 
     return (
-        <div
-            className={cn(className, 'flex flex-row w-screen pt-4 fixed top-0 bg-border bg-gray-900 min-h-[4rem] z-40')}>
-            <div className={'w-4/12 mb-[1rem]'}></div>
+        <div className={cn(className, 'flex flex-row w-screen pt-4 fixed top-0 bg-border bg-gray-900 min-h-[4rem] z-40')}>
+            <div className={'w-4/12 mb-[1rem] text-center'}>
+                <Link to={'/home'}><h1
+                    className={'font-mono font-bold text-[2rem] text-white'}>Organizer</h1></Link>
+            </div>
             <Command className={'bg-bg-calm-yellow w-4/12 h-auto mb-[1rem]'}>
                 <CommandInput placeholder="Type a command or search..." onValueChange={(e) => setSearchValue(e)}/>
                 {searchValue.length > 0 ?
@@ -41,7 +43,10 @@ function Header({className, user}) {
                         <CommandEmpty>No results found.</CommandEmpty>
                         <CommandGroup heading="Suggestions">
                             {FEATURES_LIST.map((feature) => {
-                                return <Link to={feature.href}><CommandItem>{feature.title}</CommandItem></Link>
+                                if(feature.href.slice(-1) == '/' && feature.href.length>1) {
+                                    feature.href += `${user.id}`
+                                }
+                                return <Link to={feature.href}><CommandItem className={'cursor-pointer'}>{feature.title}</CommandItem></Link>
                             })}
                         </CommandGroup>
                         <CommandSeparator/>

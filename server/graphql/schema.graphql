@@ -26,6 +26,7 @@ type Query {
         end_date: DateTime,
         user_id: ID,
         team_id: ID,
+        done: Boolean
     ): [Task]! @field(resolver: "Tasks")
 
     teams(
@@ -33,6 +34,38 @@ type Query {
         user_id: ID
         limit: Boolean
     ) : [Team]! @field(resolver: "Teams")
+}
+
+type Mutation {
+    createTask(
+        title: String!,
+        description: String!,
+        target_date: String!,
+        is_team: Boolean!,
+        done: Boolean,
+        priority: Int,
+        team_id: Int,
+        user_id: Int
+    ) : Task @create
+
+    updateTask(
+        id: ID!
+        title: String,
+        description: String,
+        target_date: String,
+        is_team: Boolean,
+        done: Boolean,
+        priority: Int,
+        team_id: Int,
+        user_id: Int
+    ) : Task @update
+
+    updateUser(
+        id: ID!
+        name: String
+        email: String
+    ): User @update
+
 }
 
 #user model

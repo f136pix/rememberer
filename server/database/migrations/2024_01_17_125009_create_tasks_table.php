@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
-            $table->string('description');
+            $table->longText('description');
             $table->timestamp('target_date');
             $table->boolean('is_team');
             $table->boolean('done');
             $table->integer('priority');
-            $table->unsignedBigInteger('team_id')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('team_id')->nullable(true);
+            $table->unsignedBigInteger('user_id')->nullable(true);
 
             // cascadde - if user/team deleted also is the task
             $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');

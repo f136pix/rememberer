@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState, ReactNode} from 'react';
-import {IContextType, IUser} from "@/types";
-import {getCurrentUser} from "@/api/auth/authApi.ts";
+import {IContextType, IUser} from "src/types";
+import {getCurrentUser} from "@/services/api/auth/authApi.ts";
 import {useLocation, useNavigate} from "react-router-dom";
 import {toast} from "@/components/ui/use-toast.ts";
 

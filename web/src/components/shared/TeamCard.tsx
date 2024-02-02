@@ -9,7 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import {useState} from "react";
-import {CARD_COLORS} from "@/config/preseted-data/Index.tsx";
+import {CARD_COLORS} from "@/lib/config/index.tsx";
 import {ChevronLast} from "lucide-react";
 
 export function TeamCard({className, name, tasks, users, ...props}: CardProps) {

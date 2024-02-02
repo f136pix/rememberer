@@ -32,6 +32,18 @@ export type ITask = {
     updated_at: Date
 }
 
+export type ICreateTask = {
+    id?: number,
+    title: string,
+    description: string,
+    target_date: string,
+    is_team: boolean,
+    done: boolean,
+    priority: number,
+    team_id: number | null,
+    user_id: number | null,
+}
+
 export type ITeam = {
     id: number
     name: string

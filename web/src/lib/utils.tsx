@@ -8,6 +8,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function generateListItem(icon : ReactNode, title: string, href: string) {
-    return <CommandItem>{title} </CommandItem>
-}
+

@@ -32,6 +32,14 @@ final class Tasks
         if (isset($args['team_id'])) {
             $query->where('team_id', $args['team_id']);
         }
+
+        // where id = requested id
+        if (isset($args['done'])) {
+            $query->where('done', $args['done']);
+        }
+
+        // orders by target_date
+        $query->orderBy('target_date');
         return $query->get();
     }
 }

@@ -28,11 +28,11 @@ export const FEATURES_LIST = [{
 }, {
     icon: <UsersRoundIcon/>,
     title: 'Teams',
-    href: '/teams'
+    href: '/teams/'
 }, {
     icon: <ClipboardIcon/>,
     title: 'Tasks',
-    href: '/tasks'
+    href: '/tasks/'
 }]
 
 export const FEATURES_ICONS = []

@@ -17,14 +17,14 @@ import {
 import {Input} from "@/components/ui/input.tsx";
 import {emailValidationSchema, loginValidationSchema, registerValidationSchema} from "@/lib/validation";
 import FadeIn from "react-fade-in";
-import {useCheckEmailExists, useLoginUser, useRegisterUser} from "@/api/auth/authQueries.ts";
-import {IUserReq} from "@/types";
+import {useCheckEmailExists, useLoginUser, useRegisterUser} from "@/services/api/auth/authQueries.ts";
+import {IUserReq} from "src/types";
 import {useNavigate} from "react-router-dom";
 import {Simulate} from "react-dom/test-utils";
 import {ToastAction, Toast} from "@/components/ui/toast.tsx";
 import {toast} from "@/components/ui/use-toast.ts";
 import error = Simulate.error;
-import {getCrsfToken} from "@/api/auth/authApi.ts";
+import {getCrsfToken} from "@/services/api/auth/authApi.ts";
 
 
 export function AuthForm(props) {

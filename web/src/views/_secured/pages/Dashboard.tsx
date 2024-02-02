@@ -1,17 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {useDestroySession, useLoginUser} from "@/api/auth/authQueries.ts";
-import {checkIfExists, getCurrentUser} from "@/api/auth/authApi.ts";
 import moment from "moment";
 import DateComponent from "@/components/shared/DateComponent.tsx";
 import MonthCalendar from "@/components/shared/MonthCalendar.tsx";
-import Header from "@/components/shared/Header.tsx";
 import {useUserContext} from "@/context/AuthContext.tsx";
-import FillScreenWrapper from "@/components/utils/FiilScreenWrapper.tsx";
 import TeamSection from "@/components/shared/TeamSection.tsx";
-import {useGetCurrUserTeams, useGetTaskByUser} from "@/api/graphQl/graphQlQueries.ts";
-import {toast} from "@/components/ui/use-toast.ts";
-import {ITask} from "@/types";
-import Footer from "@/components/shared/Footer.tsx";
+import {useGetCurrUserTeams, useGetTaskByUser} from "@/services/api/graphQl/graphQlQueries.ts";
+import {ITask} from "src/types";
 
 function Dashboard(props) {
     const {mutateAsync: getTasks, isPending: isGettingTasks} = useGetTaskByUser();
@@ -34,11 +28,12 @@ function Dashboard(props) {
         const data = {
             id: user.id,
             start: dateMinusOneYear,
-            end: datePlusOneYear
+            end: datePlusOneYear,
+            done: false
         }
         const res: boolean | ITask[] = await getTasks(data)
         if (res !== false) {
-            setUserTasks(res.tasks)
+            setUserTasks(res)
         } else {
             console.log('no tasks')
         }
@@ -48,11 +43,15 @@ function Dashboard(props) {
         const today = moment();
         const currentDayOfWeek = today.day();
         const daysUntilSunday = 6 - currentDayOfWeek;
-        const weekdays: [{}] = [];
+        const weekdays = [];
         for (let i = 0; i <= daysUntilSunday; i++) {
             const day = today.clone().add(i, 'days');
             let tasksCount = 0;
             const tasks : ITask[] = userTasks.forEach((task : ITask) => {
+                console.log(task)
+                if(task.done !== false) {
+                    return
+                }
                 if (task.target_date.substring(0, 10) == day.format('YYYY-MM-DD HH:mm:ss').substring(0, 10)) {
                     tasksCount++
                 }
@@ -64,9 +63,11 @@ function Dashboard(props) {
                 taskCnt : tasksCount
             });
         }
-        console.log(weekdays)
+
         setWeekDays(weekdays)
+        return (weekdays)
     }
+
     return (
         <div>
                 <section className={'pt-8 ml-[5%] mr-[30%] pb-8'}>

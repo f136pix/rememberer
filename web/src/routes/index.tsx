@@ -1,10 +1,11 @@
 import {Route, Routes} from "react-router-dom";
-import HomePage from "@/_public/pages/HomePage.tsx";
-import RegisterLayout from "@/_public/RegisterLayout.tsx";
-import AuthPage from "@/_public/pages/AuthPage.tsx";
-import Dashboard from "@/_secured/pages/Dashboard.tsx";
-import SecureLayout from "@/_secured/SecureLayout.tsx";
-import Profile from "@/_secured/pages/Profile.tsx";
+import HomePage from "@/views/_public/pages/HomePage.tsx";
+import RegisterLayout from "@/views/_public/RegisterLayout.tsx";
+import AuthPage from "@/views/_public/pages/AuthPage.tsx";
+import Dashboard from "@/views/_secured/pages/Dashboard.tsx";
+import SecureLayout from "@/views/_secured/SecureLayout.tsx";
+import Profile from "@/views/_secured/pages/Profile.tsx";
+import TasksDashboard from "@/views/_secured/pages/TasksDashboard.tsx";
 
 export const AppRoutes = () => {
     return (
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
             <Route element={<SecureLayout/>}>
                 <Route path={'/'} element={<Dashboard/>}/>
                 <Route path={'/profile/:id'} element={<Profile/>}/>
+                <Route path={'/tasks/:id'} element={<TasksDashboard/>}/>
                 {/*<Route path={'/explore'} element={<Explore/>}/>
                 <Route path={'/saved'} element={<Saved/>}/>
                 <Route path={'/all-users'} element={<AllUsers/>}/>

@@ -6,8 +6,8 @@ import {
     getCurrentUser,
     loginUserApi,
     registerUser
-} from "@/api/auth/authApi.ts";
-import {IRegisterUserReq, IUserReq} from "@/types";
+} from "@/services/api/auth/authApi.ts";
+import {IRegisterUserReq, IUserReq} from "src/types";
 
 export const useLoginUser = () => {
     return useMutation({

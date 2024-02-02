@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {useGetCurrUserTeams} from "@/api/graphQl/graphQlQueries.ts";
+import {useGetCurrUserTeams} from "@/services/api/graphQl/graphQlQueries.ts";
 import {useUserContext} from "@/context/AuthContext.tsx";
-import {ITask, ITeam} from "@/types";
+import {ITask, ITeam} from "src/types";
 import {Card} from "@/components/ui/card.tsx";
 import {TeamCard} from "@/components/shared/TeamCard.tsx";
 import {Link} from "react-router-dom";
