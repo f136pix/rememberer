@@ -1,5 +1,6 @@
-import {cn} from "@/lib/utils.tsx";
 import {ReactNode} from "react";
+
+import {cn} from "@/lib/utils.tsx";
 
 type IParameters = {
     className?: string,
@@ -15,4 +16,4 @@ function FillScreenWrapper({className, children}: IParameters) {
     );
 }
 
-export default FillScreenWrapper
+export default FillScreenWrapper;

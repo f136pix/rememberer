@@ -1,8 +1,8 @@
-import axios from "../config.ts";
 import {IRegisterUser, IRegisterUserReq, ITask, IUserReq} from "src/types";
 
+import axios from "../config.ts";
+
 export const getTeams = async (id: number, bool: boolean) => {
-    try {
         const res = await axios.post('/graphql', {
                 query: `query teams {
                 teams(user_id:${id}, limit:${bool}) {
@@ -20,12 +20,9 @@ export const getTeams = async (id: number, bool: boolean) => {
                 }
             }`
             }
-        )
-        return res
-    } catch (err) {
-        throw err
-    }
-}
+        );
+        return res;
+};
 
 export const getTasksByUser = async (data) => {
     if (data.start && data.end) {
@@ -43,8 +40,8 @@ export const getTasksByUser = async (data) => {
                       }
                     }`
             }
-        )
-        return res
+        );
+        return res;
     }
 
     const res = await axios.post('/graphql', {
@@ -60,9 +57,9 @@ export const getTasksByUser = async (data) => {
                       }
                     }`
         }
-    )
-    return res
-}
+    );
+    return res;
+};
 
 export const updateUserById = async (data) : Promise<ITask> => {
     const res = await axios.post('/graphql', {
@@ -75,9 +72,9 @@ export const updateUserById = async (data) : Promise<ITask> => {
                 }
             }`
         }
-    )
-    return res
-}
+    );
+    return res;
+};
 
 export const createTask = async (data) => {
     const res = await axios.post('/graphql', {
@@ -109,9 +106,9 @@ export const createTask = async (data) => {
               }
             }`
         }
-    )
-    return res
-}
+    );
+    return res;
+};
 
 export const updateTaskById= async (data) => {
     const res = await axios.post('/graphql', {
@@ -125,9 +122,9 @@ export const updateTaskById= async (data) => {
                     }
                 }`
         }
-    )
-    return res
-}
+    );
+    return res;
+};
 
 
 

@@ -1,10 +1,11 @@
+import {Link} from "react-router-dom";
+
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-} from "@/components/ui/accordion.tsx"
-import {Link} from "react-router-dom";
+} from "@/components/ui/accordion.tsx";
 
 type IParameters = {
     className?: string,

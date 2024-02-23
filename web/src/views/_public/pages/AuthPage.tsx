@@ -1,6 +1,6 @@
-import {FormCard} from "@/components/shared/FormCard.tsx";
-import Footer from "@/components/shared/Footer.tsx";
 import AuthForm from "@/components/forms/AuthForm.tsx";
+import Footer from "@/components/shared/Footer.tsx";
+import {FormCard} from "@/components/shared/FormCard.tsx";
 
 function AuthPage(props) {
     return (

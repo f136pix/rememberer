@@ -1,43 +1,44 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import moment from "moment";
+import {ITask, ITaskReq} from "src/types";
+
 import DateComponent from "@/components/shared/DateComponent.tsx";
 import MonthCalendar from "@/components/shared/MonthCalendar.tsx";
-import {useUserContext} from "@/context/AuthContext.tsx";
 import TeamSection from "@/components/shared/TeamSection.tsx";
-import {useGetCurrUserTeams, useGetTaskByUser} from "@/services/api/graphQl/graphQlQueries.ts";
-import {ITask} from "src/types";
+import {useUserContext} from "@/context/AuthContext.tsx";
+import {useGetTaskByUser} from "@/services/api/graphQl/graphQlQueries.ts";
 
-function Dashboard(props) {
-    const {mutateAsync: getTasks, isPending: isGettingTasks} = useGetTaskByUser();
-    const {user} = useUserContext()
-    const [weekDays, setWeekDays] = useState([])
-    const [userTasks, setUserTasks] = useState([])
+function Dashboard() {
+    const {mutateAsync: getTasks} = useGetTaskByUser();
+    const {user} = useUserContext();
+    const [weekDays, setWeekDays] = useState([]);
+    const [userTasks, setUserTasks] = useState<ITask | []>([]);
 
     useEffect(() => {
-        getPeriodTasks()
+        getPeriodTasks();
     }, [user]);
 
     useEffect(() => {
-        calculateremainingDays()
+        calculateremainingDays();
     }, [userTasks]);
 
     const getPeriodTasks = async () => {
-        const currentDate = moment();
         const dateMinusOneYear = moment().subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
         const datePlusOneYear = moment().add(1, 'year').format('YYYY-MM-DD HH:mm:ss');
-        const data = {
+        const data : ITaskReq= {
             id: user.id,
             start: dateMinusOneYear,
             end: datePlusOneYear,
             done: false
-        }
-        const res: boolean | ITask[] = await getTasks(data)
+        };
+        const res: false | ITask[] = await getTasks(data);
         if (res !== false) {
-            setUserTasks(res)
+            // @ts-expect-error eslint fuzzing
+            setUserTasks(res);
         } else {
-            console.log('no tasks')
+            console.log('no tasks');
         }
-    }
+    };
 
     const calculateremainingDays = () => {
         const today = moment();
@@ -47,15 +48,15 @@ function Dashboard(props) {
         for (let i = 0; i <= daysUntilSunday; i++) {
             const day = today.clone().add(i, 'days');
             let tasksCount = 0;
-            const tasks : ITask[] = userTasks.forEach((task : ITask) => {
-                console.log(task)
+            userTasks?.forEach((task : ITask) => {
+                console.log(task);
                 if(task.done !== false) {
-                    return
+                    return;
                 }
                 if (task.target_date.substring(0, 10) == day.format('YYYY-MM-DD HH:mm:ss').substring(0, 10)) {
-                    tasksCount++
+                    tasksCount++;
                 }
-            })
+            });
             weekdays.push({
                 weekday: day.format('dddd').substring(0,3),
                 number: day.format('YYYY-MM-DD HH:mm:ss').substring(0, 3),
@@ -64,9 +65,9 @@ function Dashboard(props) {
             });
         }
 
-        setWeekDays(weekdays)
-        return (weekdays)
-    }
+        setWeekDays(weekdays);
+        return (weekdays);
+    };
 
     return (
         <div>

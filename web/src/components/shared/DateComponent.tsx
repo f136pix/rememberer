@@ -1,18 +1,20 @@
 import React from 'react';
-import {list} from "postcss";
+
 import {Separator} from "@/components/ui/separator.tsx";
 import {cn} from "@/lib/utils.tsx";
+
+import {list} from "postcss";
 
 function DateComponent({weekDays}) {
     const generateTaskLabel = (num: number) : string => {
         if(num == 0) {
-            return "No tasks"
+            return "No tasks";
         }
         if(num == 1) {
-            return "1 task"
+            return "1 task";
         }
-        return `${num} tasks`
-    }
+        return `${num} tasks`;
+    };
 
     return (
         <>
@@ -22,7 +24,7 @@ function DateComponent({weekDays}) {
                         <li className={'flex-col w-[14.28%] mr-5 ml-5 text-2xl text-center'} key={day.number}>
                             <h1 className={'mt-4 font-semibold'}>{day.weekday}</h1>
                         </li>
-                    )
+                    );
                 })}
             </ul>
             <ul className={'flex gap-4 h-[8rem] w-[120%] rounded bg-accent-calm-yellow bg-gray-900'}>
@@ -37,7 +39,7 @@ function DateComponent({weekDays}) {
                                 <a className={'text-lg'}>{generateTaskLabel(day.taskCnt)}</a>
                             </div>
                         </li>
-                    )
+                    );
                 })}
             </ul>
         </>

@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {Calendar} from "@/components/ui/calendar.tsx";
-import {cn} from "@/lib/utils.tsx";
 import {DayPicker} from 'react-day-picker';
-import 'react-day-picker/src/style.css';
 import {Link} from "react-router-dom";
 
+import {Calendar} from "@/components/ui/calendar.tsx";
+import {cn} from "@/lib/utils.tsx";
+
+import 'react-day-picker/src/style.css';
+
 function MonthCalendar({className, tasks}) {
-    const [disabledDays, setDisabledDays] = useState()
+    const [disabledDays, setDisabledDays] = useState();
     useEffect(() => {
-        disableDays()
+        disableDays();
     }, [tasks]);
     const disableDays = () => {
         const dates = tasks.map(task => new Date(task.target_date));
-        setDisabledDays(dates)
-    }
+        setDisabledDays(dates);
+    };
     return (
 
         <div className={'w-screen flex flex-col'}>
@@ -30,7 +32,7 @@ function MonthCalendar({className, tasks}) {
                 />
             </div>
         </div>
-    )
+    );
 }
 
 export default MonthCalendar;

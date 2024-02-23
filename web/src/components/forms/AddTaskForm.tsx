@@ -1,43 +1,33 @@
 import React from 'react';
-import {CardContent, CardHeader} from "@/components/ui/card.tsx";
 import FadeIn from "react-fade-in";
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from "@/components/ui/form.tsx";
-import {Input} from "@/components/ui/input.tsx";
-import {Button, buttonVariants} from "@/components/ui/button.tsx";
 import {useForm} from "react-hook-form";
-import * as z from "zod";
-import {createTaskValidationSchema, editUserValidationSchema} from "@/lib/validation";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Textarea} from "@/components/ui/textarea.tsx";
-import {cn} from "@/lib/utils.tsx";
-import {Calendar} from "@/components/ui/calendar.tsx";
-import {CalendarIcon, ChevronDownIcon} from "lucide-react";
 import {format} from "date-fns";
+import {CalendarIcon} from "lucide-react";
+import * as z from "zod";
+
+import {Button,} from "@/components/ui/button.tsx";
+import {Calendar} from "@/components/ui/calendar.tsx";
+import {CardContent, CardHeader} from "@/components/ui/card.tsx";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";
+import {Input} from "@/components/ui/input.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover.tsx";
-import {useUserContext} from "@/context/AuthContext.tsx";
-import {ICreateTask, ITask} from "@/types";
-import {useCreateTask, useUpdateUserById} from "@/services/api/graphQl/graphQlQueries.ts";
+import {Textarea} from "@/components/ui/textarea.tsx";
 import {toast} from "@/components/ui/use-toast.ts";
-import {Simulate} from "react-dom/test-utils";
-import reset = Simulate.reset;
+import {useUserContext} from "@/context/AuthContext.tsx";
+import {cn} from "@/lib/utils.tsx";
+import {createTaskValidationSchema} from "@/lib/validation";
+import {useCreateTask} from "@/services/api/graphQl/graphQlQueries.ts";
+import {ICreateTask} from "@/types";
 
 type props = {
     toggleForm: () => void
     updateTasks: () => void
-    resetUpdateState: () => void
 }
 
 function AddTaskForm({toggleForm, updateTasks}: props) {
-    const {mutateAsync: createTask, isPending} = useCreateTask();
-    const {user} = useUserContext()
+    const {mutateAsync: createTask} = useCreateTask();
+    const {user} = useUserContext();
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
@@ -47,11 +37,11 @@ function AddTaskForm({toggleForm, updateTasks}: props) {
             title: '',
             description: ''
         }
-    })
+    });
 
     async function onSubmit(values: z.infer<typeof createTaskValidationSchema>) {
         const formatedToDate = new Date(values.target_date);
-        const formatedToString = format(formatedToDate, 'yyyy-MM-dd HH:mm:ss.SSS').toString().substring(0, 10)
+        const formatedToString = format(formatedToDate, 'yyyy-MM-dd HH:mm:ss.SSS').toString().substring(0, 10);
         const task: ICreateTask = {
             title: values.title,
             description: values.description,
@@ -61,17 +51,17 @@ function AddTaskForm({toggleForm, updateTasks}: props) {
             priority: 1,
             team_id: null,
             user_id: user.id
-        }
+        };
 
-        const res = await createTask(task)
+        const res = await createTask(task);
         if (res == 'ok') {
             toast({
                 className: 'bg-green-400',
                 title: 'Task criada'
-            })
-            form.reset()
-            toggleForm()
-            await updateTasks()
+            });
+            form.reset();
+            toggleForm();
+            await updateTasks();
         }
     }
 

@@ -1,14 +1,15 @@
-import FiilScreenWrapper from "@/components/utils/FiilScreenWrapper.tsx";
+import FadeIn from "react-fade-in";
+
+import HomeAccordeon from "@/components/public/HomeAccordeon.tsx";
 import HomeHeader from "@/components/public/HomeHeader.tsx";
+import Footer from "@/components/shared/Footer.tsx";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-} from "@/components/ui/accordion.tsx"
-import HomeAccordeon from "@/components/public/HomeAccordeon.tsx";
-import Footer from "@/components/shared/Footer.tsx";
-import FadeIn from "react-fade-in";
+} from "@/components/ui/accordion.tsx";
+import FiilScreenWrapper from "@/components/utils/FiilScreenWrapper.tsx";
 
 function HomePage(props) {
     return (

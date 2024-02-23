@@ -1,3 +1,7 @@
+import React from "react";
+import {Link} from "react-router-dom";
+import {Github, Linkedin, Mail} from "lucide-react";
+
 import {
     NavigationMenu, NavigationMenuContent,
     NavigationMenuItem, NavigationMenuLink,
@@ -5,9 +9,6 @@ import {
     NavigationMenuTrigger
 } from "@/components/ui/navigation-menu.tsx";
 import {Separator} from "@/components/ui/separator.tsx";
-import {Link} from "react-router-dom";
-import {Github, Linkedin, Mail} from "lucide-react";
-import React from "react";
 
 function AuthHeader(props) {
     return (
@@ -23,4 +24,4 @@ function AuthHeader(props) {
     );
 }
 
-export default AuthHeader
+export default AuthHeader;

@@ -18,6 +18,8 @@ export type IUser = {
     name: string,
 }
 
+
+
 export type ITask = {
     id: number,
     title: string,
@@ -42,6 +44,13 @@ export type ICreateTask = {
     priority: number,
     team_id: number | null,
     user_id: number | null,
+}
+
+export type ITaskReq = {
+    id: number,
+    start: string,
+    end: string,
+    done: boolean
 }
 
 export type ITeam = {

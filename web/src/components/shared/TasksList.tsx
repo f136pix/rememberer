@@ -1,24 +1,25 @@
 import React, {useEffect, useState} from 'react';
-import {useGetTaskByUser, useUpdateTaskById} from "@/services/api/graphQl/graphQlQueries.ts";
-import {useUserContext} from "@/context/AuthContext.tsx";
-import {ITask} from "@/types";
 import FadeIn from "react-fade-in";
 import {Check} from "lucide-react";
+
 import {toast} from "@/components/ui/use-toast.ts";
+import {useUserContext} from "@/context/AuthContext.tsx";
+import {useGetTaskByUser, useUpdateTaskById} from "@/services/api/graphQl/graphQlQueries.ts";
+import {ITask} from "@/types";
 
 function TasksList({shouldUpdate}) {
-    const {user} = useUserContext()
+    const {user} = useUserContext();
     const {mutateAsync: getTasks, isPending: isGettingTasks} = useGetTaskByUser();
     const {mutateAsync: updateTask, isPending: isUpdatingTask} = useUpdateTaskById();
-    const [tasks, setTasks] = useState([])
+    const [tasks, setTasks] = useState([]);
     useEffect(() => {
-        retrieveTaskByUser()
+        retrieveTaskByUser();
     }, [user, shouldUpdate]);
 
 
 
     const retrieveTaskByUser = async () => {
-        const res = await getTasks({id: user.id, done: false})
+        const res = await getTasks({id: user.id, done: false});
         const groupedByDateArray = res.reduce((result, item) => {
             const date = item.target_date.split(' ')[0]; // Extracting the date part
             const existingGroup = result.find(group => group[0].target_date.split(' ')[0] === date);
@@ -32,25 +33,25 @@ function TasksList({shouldUpdate}) {
             return result;
         }, []);
 
-        setTasks(groupedByDateArray)
-        console.log(groupedByDateArray)
-    }
+        setTasks(groupedByDateArray);
+        console.log(groupedByDateArray);
+    };
 
     const checkTask = async (id: number) => {
         const data = {
             id: id,
             done: true
-        }
-        const res = await updateTask(data)
-        console.log(res)
+        };
+        const res = await updateTask(data);
+        console.log(res);
         if (res) {
             toast({
                 className: 'bg-green-300',
                 title: `Task ${res} completed`
-            })
-            retrieveTaskByUser()
+            });
+            retrieveTaskByUser();
         }
-    }
+    };
 
     return (
         <div>

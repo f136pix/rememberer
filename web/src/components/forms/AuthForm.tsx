@@ -1,59 +1,51 @@
 import React, {useEffect, useState} from 'react';
-import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
-import * as z from "zod"
-import {CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
-import {Button} from "@/components/ui/button.tsx";
-
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from "@/components/ui/form.tsx";
-import {Input} from "@/components/ui/input.tsx";
-import {emailValidationSchema, loginValidationSchema, registerValidationSchema} from "@/lib/validation";
-import FadeIn from "react-fade-in";
-import {useCheckEmailExists, useLoginUser, useRegisterUser} from "@/services/api/auth/authQueries.ts";
-import {IUserReq} from "src/types";
-import {useNavigate} from "react-router-dom";
 import {Simulate} from "react-dom/test-utils";
-import {ToastAction, Toast} from "@/components/ui/toast.tsx";
+import FadeIn from "react-fade-in";
+import {useForm} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {IRegisterUserReq, IUserReq} from "src/types";
+import * as z from "zod";
+
+import {Button} from "@/components/ui/button.tsx";
+import {CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";
+import {Input} from "@/components/ui/input.tsx";
+import {Toast,ToastAction} from "@/components/ui/toast.tsx";
 import {toast} from "@/components/ui/use-toast.ts";
+import {emailValidationSchema, loginValidationSchema, registerValidationSchema} from "@/lib/validation";
+import {useCheckEmailExists, useLoginUser, useRegisterUser} from "@/services/api/auth/authQueries.ts";
 import error = Simulate.error;
 import {getCrsfToken} from "@/services/api/auth/authApi.ts";
 
 
 export function AuthForm(props) {
     useEffect(() => {
-        getCrsfToken()
+        getCrsfToken();
     }, []);
-    const navigate = useNavigate()
-    const {mutateAsync: loginUser, isPending: isAuthenticatingUser} = useLoginUser()
-    const {mutateAsync: checkEmail, isPending: isCheckingEmail} = useCheckEmailExists()
-    const {mutateAsync: registerUser, isPending: isRegisteringUser} = useRegisterUser()
-    const [formNumber, setFormNumber] = useState('1')
-    const [equalsValue, setEqualsValue] = useState('')
-    const [inputedEmail, setInputedEmail] = useState('')
+    const navigate = useNavigate();
+    const {mutateAsync: loginUser, isPending: isAuthenticatingUser} = useLoginUser();
+    const {mutateAsync: checkEmail, isPending: isCheckingEmail} = useCheckEmailExists();
+    const {mutateAsync: registerUser, isPending: isRegisteringUser} = useRegisterUser();
+    const [formNumber, setFormNumber] = useState('1');
+    const [equalsValue, setEqualsValue] = useState('');
+    const [inputedEmail, setInputedEmail] = useState('');
     // initial form
     const form = useForm<z.infer<typeof emailValidationSchema>>({
         resolver: zodResolver(emailValidationSchema),
         defaultValues: {
             email: "",
         },
-    })
+    });
 
 
     async function onSubmit(values: z.infer<typeof emailValidationSchema>) {
-        setInputedEmail(values.email)
-        const exists: boolean = await checkEmail(values.email)
+        setInputedEmail(values.email);
+        const exists: boolean = await checkEmail(values.email);
         if (exists) {
-            setFormNumber('2')
+            setFormNumber('2');
         } else {
-            setFormNumber('3')
+            setFormNumber('3');
         }
 
     }
@@ -69,26 +61,26 @@ export function AuthForm(props) {
             email: "",
             password: ""
         },
-    })
+    });
 
 
     async function onSubmitLogin(values: z.infer<typeof loginValidationSchema>) {
         const user: IUserReq = {
             email: values.email,
             password: values.password
-        }
+        };
         try {
-            const res: boolean = await loginUser(user)
+            const res: boolean = await loginUser(user);
             if (!res) {
-                throw new Error('There was a unexpected error')
+                throw new Error('There was a unexpected error');
             }
-            return window.location.href = '/'
+            return window.location.href = '/';
         } catch (err) {
-            console.log(err)
+            console.log(err);
             toast({
                 variant: 'destructive',
                 title: err.message
-            })
+            });
         }
         //setFormNumber('3')
     }
@@ -108,28 +100,35 @@ export function AuthForm(props) {
             password: "",
             passwordConfirm: ""
         },
-    })
+    });
 
 
     async function onSubmitRegister(values: z.infer<typeof registerValidationSchema>) {
         if (values.password !== values.passwordConfirm) {
-            setEqualsValue('Passwords not matching')
-            return
+            setEqualsValue('Passwords not matching');
+            return;
         }
 
-        const res = await registerUser(values)
+        const user: IRegisterUserReq = {
+            email: values.email,
+            name: values.name,
+            password: values.password,
+            password_confirmation: values.passwordConfirm
+        };
+
+        const res = await registerUser(user);
         if (res === 'ok') {
-            window.location.href = '/'
+            window.location.href = '/';
             toast({
                 className: 'bg-green-700',
                 title: 'User created succefully'
-            })
-            return
+            });
+            return;
         }
         toast({
             variant: 'destructive',
             title: res
-        })
+        });
     }
 
 
@@ -164,7 +163,7 @@ export function AuthForm(props) {
                     </FadeIn>
                 </CardContent>
             </>
-        )
+        );
     } else if (formNumber == '2') {
         return (
             <>
@@ -212,7 +211,7 @@ export function AuthForm(props) {
                     </CardContent>
                 </FadeIn>
             </>
-        )
+        );
     } else if (formNumber == '3') {
         return (
             <>
@@ -288,7 +287,7 @@ export function AuthForm(props) {
                     </CardContent>
                 </FadeIn>
             </>
-        )
+        );
     }
 }
 

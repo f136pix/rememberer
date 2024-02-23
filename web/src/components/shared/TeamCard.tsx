@@ -1,5 +1,7 @@
-import {cn} from "@/lib/utils.tsx"
-import {Button} from "@/components/ui/button"
+import {useState} from "react";
+import {ChevronLast} from "lucide-react";
+
+import {Button} from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -7,10 +9,9 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"
-import {useState} from "react";
+} from "@/components/ui/card";
 import {CARD_COLORS} from "@/lib/config/index.tsx";
-import {ChevronLast} from "lucide-react";
+import {cn} from "@/lib/utils.tsx";
 
 export function TeamCard({className, name, tasks, users, ...props}: CardProps) {
 
@@ -47,5 +48,5 @@ export function TeamCard({className, name, tasks, users, ...props}: CardProps) {
                 </Button>
             </CardFooter>
         </Card>
-    )
+    );
 }

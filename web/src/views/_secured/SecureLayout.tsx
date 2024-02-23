@@ -1,14 +1,15 @@
 import React from 'react';
 import {Outlet} from "react-router-dom";
-import FillScreenWrapper from "@/components/utils/FiilScreenWrapper.tsx";
+
 import AuthHeader from "@/components/public/AuthHeader.tsx";
-import {Toaster} from "@/components/ui/toaster.tsx";
-import Header from "@/components/shared/Header.tsx";
 import Footer from "@/components/shared/Footer.tsx";
+import Header from "@/components/shared/Header.tsx";
+import {Toaster} from "@/components/ui/toaster.tsx";
+import FillScreenWrapper from "@/components/utils/FiilScreenWrapper.tsx";
 import {useUserContext} from "@/context/AuthContext.tsx";
 
 function RegisterLayout(props) {
-    const {user} = useUserContext()
+    const {user} = useUserContext();
 
     return (
         <FillScreenWrapper className={''}>
@@ -19,7 +20,7 @@ function RegisterLayout(props) {
             <Footer hoverColor={'bg-calm-yellow'}></Footer>
             <Toaster/>
         </FillScreenWrapper>
-    )
+    );
 
 }
 

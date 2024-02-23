@@ -11,7 +11,7 @@ type Query {
 
     #filter user by similar names
     users(
-        #Filters by name. Accepts SQL LIKE wildcards `%` and `_`.
+        # filters by name  / can use sql like wildcards `%` and `_`.
         name: String @where(operator: "like")
     ): [User!]! @paginate(defaultCount: 10)
 

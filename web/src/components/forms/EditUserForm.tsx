@@ -1,48 +1,46 @@
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
-import FadeIn from "react-fade-in";
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";
-import {Input} from "@/components/ui/input.tsx";
-import {Button} from "@/components/ui/button.tsx";
 import React, {useState} from "react";
-import * as z from "zod";
-import {editUserValidationSchema, emailValidationSchema, loginValidationSchema} from "@/lib/validation";
-import {IUserReq} from "@/types";
-import {toast} from "@/components/ui/use-toast.ts";
+import FadeIn from "react-fade-in";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+import {Button} from "@/components/ui/button.tsx";
+import {CardContent, CardHeader} from "@/components/ui/card.tsx";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form.tsx";
+import {Input} from "@/components/ui/input.tsx";
+import {toast} from "@/components/ui/use-toast.ts";
 import {useUserContext} from "@/context/AuthContext.tsx";
-import {updateUserById} from "@/services/api/graphQl/graphQlApi.ts";
-import {useGetTaskByUser, useUpdateUserById} from "@/services/api/graphQl/graphQlQueries.ts";
-import {data} from "autoprefixer";
+import {editUserValidationSchema} from "@/lib/validation";
+import {useUpdateUserById} from "@/services/api/graphQl/graphQlQueries.ts";
 
 
 
 
 function EditUserForm(props) {
-    const [errMsg, setErrMsg] = useState('')
+    const [errMsg, setErrMsg] = useState('');
     const {mutateAsync: updateUser, isPending: isUpdating} = useUpdateUserById();
 
     async function onSubmit(values: z.infer<typeof editUserValidationSchema>) {
-        console.log(values)
+        console.log(values);
         const updatedUser = {
             email: values.email,
             name: values.name,
             id: user.id
-        }
-        const res = await updateUser(updatedUser)
+        };
+        const res = await updateUser(updatedUser);
         if(res == 'email-duplicated') {
-               setErrMsg('Email already in use')
-                return
+               setErrMsg('Email already in use');
+                return;
         }
-        setErrMsg('')
+        setErrMsg('');
 
         toast({
             title: "User updated",
             className: 'bg-green-200'
-        })
+        });
     }
 
-    const {user} = useUserContext()
+    const {user} = useUserContext();
 
     const form = useForm<z.infer<typeof editUserValidationSchema>>({
         resolver: zodResolver(editUserValidationSchema),
@@ -50,7 +48,7 @@ function EditUserForm(props) {
             email: user.email,
             name: user.name
         },
-    })
+    });
 
     return (
         <div>

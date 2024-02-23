@@ -1,11 +1,12 @@
 import {Route, Routes} from "react-router-dom";
+
+import AuthPage from "@/views/_public/pages/AuthPage.tsx";
 import HomePage from "@/views/_public/pages/HomePage.tsx";
 import RegisterLayout from "@/views/_public/RegisterLayout.tsx";
-import AuthPage from "@/views/_public/pages/AuthPage.tsx";
 import Dashboard from "@/views/_secured/pages/Dashboard.tsx";
-import SecureLayout from "@/views/_secured/SecureLayout.tsx";
 import Profile from "@/views/_secured/pages/Profile.tsx";
 import TasksDashboard from "@/views/_secured/pages/TasksDashboard.tsx";
+import SecureLayout from "@/views/_secured/SecureLayout.tsx";
 
 export const AppRoutes = () => {
     return (
@@ -31,6 +32,6 @@ export const AppRoutes = () => {
              */}
             </Route>
         </Routes>
-    )
+    );
 
 };

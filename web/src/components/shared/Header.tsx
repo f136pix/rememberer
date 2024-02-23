@@ -1,33 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command.tsx";
-import {CommandSeparator} from "cmdk";
-import {cn, navigateTo} from "@/lib/utils.tsx";
-import {useUserContext} from "@/context/AuthContext.tsx";
-import {ArrowLeftFromLine, Bolt, WavesIcon} from "lucide-react";
-import {useDestroySession} from "@/services/api/auth/authQueries.ts";
-import {toast} from "@/components/ui/use-toast.ts";
-import {useGetCurrUserTeams} from "@/services/api/graphQl/graphQlQueries.ts";
+import {useEffect, useState} from 'react';
 import {Link, useNavigate} from "react-router-dom";
+import {CommandSeparator} from "cmdk";
+import {ArrowLeftFromLine, Bolt} from "lucide-react";
+
+import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command.tsx";
+import {toast} from "@/components/ui/use-toast.ts";
 import {FEATURES_LIST} from "@/lib/config/index.tsx";
-import {generateListItem} from "@/lib/utils.tsx";
+import {cn, trimFirstName} from "@/lib/utils.tsx";
+import {useDestroySession} from "@/services/api/auth/authQueries.ts";
+
 
 function Header({className, user}) {
     const navigate = useNavigate();
-    const [searchValue, setSearchValue] = useState('')
-    const [userName, setUserName] = useState(" ")
-    const {mutateAsync: logoutUser, isPending: isAuthenticatingUser} = useDestroySession()
+    const [searchValue, setSearchValue] = useState('');
+    const [userName, setUserName] = useState(" ");
+    const {mutateAsync: logoutUser, isPending: isAuthenticatingUser} = useDestroySession();
     useEffect(() => {
-        setUserName(user.name)
+        setUserName(user.name);
     }, [user]);
     const destroySeason = async () => {
         const res = await logoutUser();
         if (res == true) {
-            return window.location.href = '/auth'
+            return window.location.href = '/auth';
         }
         toast({
             title: 'Houve um erro'
-        })
-    }
+        });
+    };
 
 
     return (
@@ -44,9 +43,9 @@ function Header({className, user}) {
                         <CommandGroup heading="Suggestions">
                             {FEATURES_LIST.map((feature) => {
                                 if(feature.href.slice(-1) == '/' && feature.href.length>1) {
-                                    feature.href += `${user.id}`
+                                    feature.href += `${user.id}`;
                                 }
-                                return <Link to={feature.href}><CommandItem className={'cursor-pointer'}>{feature.title}</CommandItem></Link>
+                                return <Link to={feature.href}><CommandItem className={'cursor-pointer'}>{feature.title}</CommandItem></Link>;
                             })}
                         </CommandGroup>
                         <CommandSeparator/>
@@ -60,7 +59,7 @@ function Header({className, user}) {
             <div className={'w-3/12 flex flex-row justify-center content-center mx-auto max-h-[4rem] mb-[1rem]'}>
                 <div className={'flex w-[50%] my-auto'}>
                     <h1 className={'text-neutral-400 italic mr-1 hover:underline'}>Welcome, </h1>
-                    <h1 className={'text-neutral-200 font-bold'}>{userName}</h1>
+                    <h1 className={'text-neutral-200 font-bold'}>{trimFirstName(userName)}</h1>
                 </div>
                 <div className={'flex w-[50%] my-auto justify-around'}>
                     <Link to={`profile/${user.id}`}><Bolt

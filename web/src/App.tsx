@@ -1,9 +1,11 @@
-import './App.css'
-import {AppRoutes} from "@/routes";
-import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import AuthContext from "@/context/AuthContext.tsx";
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 
-const queryClient = new QueryClient()
+import AuthContext from "@/context/AuthContext.tsx";
+import {AppRoutes} from "@/routes";
+
+import './App.css';
+
+const queryClient = new QueryClient();
 
 function App() {
 
@@ -15,7 +17,7 @@ function App() {
                 </AuthContext>
             </QueryClientProvider>
         </>
-    )
+    );
 }
 
-export default App
+export default App;

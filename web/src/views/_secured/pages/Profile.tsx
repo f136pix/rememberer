@@ -1,4 +1,5 @@
 import React from 'react';
+
 import EditUserForm from "@/components/forms/EditUserForm.tsx";
 
 function Profile() {

@@ -1,6 +1,7 @@
 import React from 'react';
-import {Github, Linkedin, Mail, NotebookPen} from "lucide-react";
 import {Link} from "react-router-dom";
+import {Github, Linkedin, Mail, NotebookPen} from "lucide-react";
+
 import {
     NavigationMenu, NavigationMenuContent,
     NavigationMenuItem, NavigationMenuLink,

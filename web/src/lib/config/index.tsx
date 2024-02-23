@@ -9,7 +9,7 @@ export const SOCIAL_LINKS = [{
 }, {
     component: 'Mail',
     link: 'https://github.com/f136pix'
-}]
+}];
 
 export const CARD_COLORS = [{
     color: 'bg-calm-blue',
@@ -19,7 +19,7 @@ export const CARD_COLORS = [{
     color: 'bg-calm-yellow'
 }, {
     color: 'bg-calm-green'
-}]
+}];
 
 export const FEATURES_LIST = [{
     icon: <Home/>,
@@ -33,6 +33,6 @@ export const FEATURES_LIST = [{
     icon: <ClipboardIcon/>,
     title: 'Tasks',
     href: '/tasks/'
-}]
+}];
 
-export const FEATURES_ICONS = []
+export const FEATURES_ICONS = [];

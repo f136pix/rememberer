@@ -1,23 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {useGetCurrUserTeams} from "@/services/api/graphQl/graphQlQueries.ts";
-import {useUserContext} from "@/context/AuthContext.tsx";
-import {ITask, ITeam} from "src/types";
-import {Card} from "@/components/ui/card.tsx";
-import {TeamCard} from "@/components/shared/TeamCard.tsx";
 import {Link} from "react-router-dom";
 import {X} from "lucide-react";
+import {ITask, ITeam} from "src/types";
+
+import {TeamCard} from "@/components/shared/TeamCard.tsx";
+import {Card} from "@/components/ui/card.tsx";
+import {useUserContext} from "@/context/AuthContext.tsx";
+import {useGetCurrUserTeams} from "@/services/api/graphQl/graphQlQueries.ts";
 
 function TeamSection({user}) {
     const {mutateAsync: getCurrTeams, isPending: isGettingTeams} = useGetCurrUserTeams();
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
     const setTeamsData = async () => {
-        const res: boolean | [ITeam] = await getCurrTeams({id: user.id, bool: true})
+        const res: boolean | [ITeam] = await getCurrTeams({id: user.id, bool: true});
         if (res !== false) {
-            setData(res)
+            setData(res);
         }
-    }
+    };
     useEffect(() => {
-        setTeamsData()
+        setTeamsData();
     }, [user]);
     return (
         <div className={'bg-gray-800 h-auto pb-[2rem]'}>
@@ -28,11 +29,11 @@ function TeamSection({user}) {
             <div className={'flex justify-around h-auto'}>
                 {data.length > 0 ?
                     data.map((team: ITeam) => {
-                        const slicedTasks: ITask[] = team.tasks.slice(0, 3)
+                        const slicedTasks: ITask[] = team.tasks.slice(0, 3);
                         return (
                             <TeamCard key={team.id} className={'mt-10'} name={team.name} users={team.users.length}
                                       tasks={slicedTasks}/>
-                        )
+                        );
                     }) :
                     <div>
                         <X size={200} className={'text-neutral-200'}></X>
