@@ -1,14 +1,12 @@
-import React from 'react';
 import {Outlet} from "react-router-dom";
-
-import AuthHeader from "@/components/public/AuthHeader.tsx";
 import Footer from "@/components/shared/Footer.tsx";
 import Header from "@/components/shared/Header.tsx";
 import {Toaster} from "@/components/ui/toaster.tsx";
 import FillScreenWrapper from "@/components/utils/FiilScreenWrapper.tsx";
 import {useUserContext} from "@/context/AuthContext.tsx";
 
-function RegisterLayout(props) {
+function SecureLayout () {
+
     const {user} = useUserContext();
 
     return (
@@ -24,4 +22,4 @@ function RegisterLayout(props) {
 
 }
 
-export default RegisterLayout;
+export default SecureLayout;

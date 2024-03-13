@@ -48,11 +48,13 @@ function Dashboard() {
         for (let i = 0; i <= daysUntilSunday; i++) {
             const day = today.clone().add(i, 'days');
             let tasksCount = 0;
+            // @ts-ignore
             userTasks?.forEach((task : ITask) => {
                 console.log(task);
                 if(task.done !== false) {
                     return;
                 }
+                // @ts-ignore
                 if (task.target_date.substring(0, 10) == day.format('YYYY-MM-DD HH:mm:ss').substring(0, 10)) {
                     tasksCount++;
                 }
@@ -79,7 +81,7 @@ function Dashboard() {
                     <TeamSection user={user}></TeamSection>
                 </section>
                 <section className={'h-auto bg-bg-calm-peach flex justify-center'}>
-                    <MonthCalendar className={'w-auto mt-10'} tasks={userTasks}/>
+                    <MonthCalendar className={'w-auto mt-10'} tasks={userTasks} userId ={user.id} />
                 </section>
         </div>
     );
