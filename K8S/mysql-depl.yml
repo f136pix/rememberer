@@ -1,0 +1,48 @@
+# declaring mysql pod
+# container port : 3306
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - image: mysql:latest
+          name: mysql
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: secret
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-claim
+---
+# declaring mysql service -> fowards request to mysql pod
+# local port : 3306
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: NodePort
+  ports:
+    - port: 3306 #internal port exposed to container
+      nodePort: 30066 # external port exposed to localhost
+  selector:
+    #fowards request to mysql pod
+    app: mysql
