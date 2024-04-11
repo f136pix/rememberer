@@ -37,6 +37,7 @@ const AuthProvider = ({children}: { children: ReactNode }) => {
     const checkAuthUser = async (): Promise<boolean> => {
         try {
             const currentUser: IUser = await getCurrentUser();
+            console.log(currentUser)
             if (!currentUser) {
                 setIsAuthenticated(false);
                 return false;

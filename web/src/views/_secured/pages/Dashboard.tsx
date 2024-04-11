@@ -12,7 +12,7 @@ function Dashboard() {
     const {mutateAsync: getTasks} = useGetTaskByUser();
     const {user} = useUserContext();
     const [weekDays, setWeekDays] = useState([]);
-    const [userTasks, setUserTasks] = useState<ITask | []>([]);
+    const [userTasks, setUserTasks] = useState<ITask[] | []>([]);
 
     useEffect(() => {
         getPeriodTasks();

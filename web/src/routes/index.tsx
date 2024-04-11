@@ -17,6 +17,7 @@ export const AppRoutes = () => {
                 <Route path={'/profile/:id'} element={<Profile/>}/>
                 <Route path={'/tasks/:id'} element={<TasksDashboard/>}/>
                 <Route path={'/teams/:id'} element={<TeamsDashboard/>}/>
+                <Route path={'/teams/:id/add_teams'} element={<TeamsDashboard/>}/>
                 {/*<Route path={'/explore'} element={<Explore/>}/>
                 <Route path={'/saved'} element={<Saved/>}/>
                 <Route path={'/all-users'} element={<AllUsers/>}/>

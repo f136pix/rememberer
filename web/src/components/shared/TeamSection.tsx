@@ -24,7 +24,7 @@ function TeamSection({user}) {
         <div className={'bg-gray-800 h-auto pb-[2rem]'}>
             <div className={'flex justify-between content-center items-center'}>
                 <h1 className={'text-neutral-200 pt-6 text-[3rem] font-bold ml-[2%] align-middle'}>Your teams</h1>
-                <Link to={'/teams'} className={'text-neutral-200 pt-6 text-[1rem] italic mr-[4%] underline hover:text-black transition'}>See more</Link>
+                <Link to={`/teams/${user.id}`} className={'text-neutral-200 pt-6 text-[1rem] italic mr-[4%] underline hover:text-black transition'}>See more</Link>
             </div>
             <div className={'flex justify-around h-auto'}>
                 {data.length > 0 ?

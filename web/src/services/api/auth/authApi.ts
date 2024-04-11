@@ -8,6 +8,7 @@ export const loginUserApi = async (data: IUserReq) => {
         email: data.email,
         password: data.password
     });
+    console.log('loginUserApi', res.data);
     return res;
 
 };
@@ -24,12 +25,14 @@ export const destroyToken = async () => {
 export const getCurrentUser = async () => {
     try {
         const res = await axios.get('/api/user');
+        console.log('getCurrentUser', res);
         // bussiness logic
         if (res.data) {
             return res.data;
         }
         return false;
     } catch (err) {
+        console.log('getCurrentUserErr', err);
         return false;
     }
 };

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 
 import AddTaskForm from "@/components/forms/AddTaskForm.tsx";
 import TasksList from "@/components/shared/TasksList.tsx";
+import FillScreenWrapper from "@/components/utils/FiilScreenWrapper.tsx";
 
 function AddTaskIcon() {
     return (
@@ -38,26 +39,40 @@ function TasksDashboard() {
 
 
     return (
-        <div className={'min-h-screen bg-bg-calm-yellow'}>
-            <div className={'pt-[4rem] flex justify-between align-middle items-center h-[10rem]'}>
-                <h1 className={'text-[4rem] font-bold ml-[3%]'}>Your Tasks</h1>
-                <h2></h2>
-                <div
-                    className={'text-[2rem] italic mr-[10%] text-center'}>
-                    {!isFormActive ?
-                        <div onClick={toggleForm}
-                             className={'mr-[5rem] text-[2rem] italic text-center hover:text-gray-600 transition'}>
-                            <FadeIn><AddTaskIcon/></FadeIn></div> :
-                        <div className={'flex flex-col absolute right-[6.5rem] top-[7rem]'}><p onClick={toggleForm}
-                                                                                               className={'text-[2rem] italic text-center hover:text-gray-600 transition'}>
-                            <CloseTaskFormIcon/></p><FadeIn><AddTaskForm toggleForm={toggleForm}
-                                                                         updateTasks={updateTasksFnct}/></FadeIn></div>}
+        <FillScreenWrapper>
+            <div className={'min-h-screen bg-bg-calm-yellow'}>
+                <div className={'pt-[4rem] flex justify-between align-middle items-center h-[10rem]'}>
+                    <h1 className={'text-[4rem] font-bold ml-[3%]'}>Your Tasks</h1>
+                    <h2></h2>
+                    <div
+                        className={'text-[2rem] italic mr-[10%] text-center'}>
+                        {!isFormActive ?
+                            <div onClick={toggleForm} className={'flex flex-col absolute right-[11.5rem] top-[7rem]'}>
+                                <FadeIn>
+                                    <p
+                                        className={'text-[2rem] italic text-center hover:text-gray-600 transition'}>
+                                        <AddTaskIcon/>
+                                    </p>
+                                </FadeIn>
+                            </div>
+                            :
+                            <div className={'flex flex-col absolute right-[6.5rem] top-[7rem]'}>
+                                <p onClick={toggleForm}
+                                   className={'text-[2rem] italic text-center hover:text-gray-600 transition'}>
+                                    <CloseTaskFormIcon/>
+                                </p>
+                                <FadeIn>
+                                    <AddTaskForm toggleForm={toggleForm} updateTasks={updateTasksFnct}/>
+                                </FadeIn>
+                            </div>
+                        }
+                    </div>
                 </div>
+                <section className={'mt-[3rem ml-[5%] w-[65%]'}>
+                    <TasksList shouldUpdate={updateTasks}/>
+                </section>
             </div>
-            <section className={'mt-[3rem ml-[5%] w-[65%]'}>
-                <TasksList shouldUpdate={updateTasks}/>
-            </section>
-        </div>
+        </FillScreenWrapper>
     );
 }
 
